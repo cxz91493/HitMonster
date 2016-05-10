@@ -8,22 +8,29 @@ import java.util.LinkedList;
  */
 public class DrawThread extends Thread {
 
-    private LinkedList<Monster> monsterList = new LinkedList<>();
+    private LinkedList<Monster> monsterList;
+    private MySurfaceView surfaceView;
+    private boolean exitFlag = false;
 
-    public DrawThread(LinkedList<Monster> monsterList){
+    public DrawThread(LinkedList<Monster> monsterList, MySurfaceView surfaceView){
         this.monsterList = monsterList;
+        this.surfaceView = surfaceView;
+    }
+
+    public void interrupt(){
+        exitFlag = true;
     }
 
     @Override
     public void run() {
-        while(true)
+        while(!exitFlag)
         {
             for(int i=0 ; i < monsterList.size() ; i++){
                 Monster monster = monsterList.get(i);
                 monster.setNowX();
                 monster.setNowY();
             }
-            MySurfaceView.draw(monsterList);
+            surfaceView.draw(monsterList);
 
         }
 

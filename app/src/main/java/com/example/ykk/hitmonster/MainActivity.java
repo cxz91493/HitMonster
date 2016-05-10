@@ -1,20 +1,23 @@
 package com.example.ykk.hitmonster;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
-import android.view.View;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 
 import java.util.LinkedList;
 
 public class MainActivity extends AppCompatActivity {
 
     private LinkedList<Monster> monsterList = new LinkedList<>();
+
+    float x, y;
+    MySurfaceView surfaceView;
+    MonsterThread monsterThread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +31,11 @@ public class MainActivity extends AppCompatActivity {
 
         MySurfaceView.screenWidth = monitorSize.widthPixels - 32;
         MySurfaceView.screenHeight = monitorSize.heightPixels - 82;
-        MySurfaceView surfaceView = new MySurfaceView(this);
+        surfaceView = new MySurfaceView(this);
         setContentView(surfaceView);
 
-
-        new MonsterThread(monsterList).start();
+        monsterThread  = new MonsterThread(monsterList, surfaceView);
+        monsterThread.start();
 
     }
 
@@ -48,13 +51,48 @@ public class MainActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()){
+            case R.id.action_settings:
+                break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+
+
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                x = event.getX();
+                y = event.getY() - 60;//誤差
+//                for(Monster monster: monsterList){
+//                    Log.e("Monster X ", monster.getNowX()+"");
+//                    Log.e("Monster Y", monster.getNowY() +"");
+////                }
+//                Log.e("onTouch X", x +"");
+//                Log.e("onTouch Y",  y+"");
+                for(Monster monster: monsterList){
+                    if(x >= monster.getNowX() && x <= monster.getNowX()+100 && y >= monster.getNowY() && y <= monster.getNowY()+100){
+                        //Log.e("hitMonster ", monster.getHP() - 1 + "");
+                        if(monster.getHP()!=0) {
+                            monster.setHP(monster.getHP() - 1);
+                            if(monster.getHP()==0){
+                                monsterList.remove(monster);
+                                    break;
+                            }
+                        }
+                    }
+                }
+                break;
+        }
+        return true;
+    }
+
+    public void onDestroy(){
+        super.onDestroy();
+        monsterThread.interrupt();
+
     }
 }

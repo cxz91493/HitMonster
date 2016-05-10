@@ -11,9 +11,12 @@ public class Monster {
     //向量，可以通過調節此兩個變數調節移動速度
     private int dx, dy;
 
-    public Monster(float nowX, float nowY, int speed) {
+    private int HP;
+
+    public Monster(float nowX, float nowY, int speed, int HP) {
         this.nowX = nowX;
         this.nowY = nowY;
+        this.HP = HP;
         dx = speed;
         dy = speed;
 
@@ -27,6 +30,9 @@ public class Monster {
         return nowY;
     }
 
+    public int getHP(){
+        return HP;
+    }
     public void setNowX() {
         if (nowX < 0 || nowX > MySurfaceView.screenWidth - 32) {
             dx = -dx;
@@ -42,5 +48,10 @@ public class Monster {
         }
 
         nowY = nowY + dy;
+    }
+
+    public int setHP(int nowHP){
+        HP = nowHP;
+        return HP;
     }
 }
