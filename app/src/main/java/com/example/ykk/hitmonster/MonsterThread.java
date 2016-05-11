@@ -1,6 +1,8 @@
 package com.example.ykk.hitmonster;
 
 
+import android.util.Log;
+
 import java.util.LinkedList;
 
 /**
@@ -22,11 +24,10 @@ public class MonsterThread extends Thread {
         int time = 3000;
         new DrawThread(monsterList,surfaceView).start();
 
-        while (monsterCount <= 10) {
+        while (monsterList.size() <= 10) {
             if (monsterCount % 5 == 0) {//Add speed
                 speed++;
                 time = (time == 1000 ) ? 1000 : time-500;
-
             }
             float x = (float) (Math.random() * MySurfaceView.screenWidth);
             float y = (float) (Math.random() * MySurfaceView.screenHeight);
@@ -41,5 +42,4 @@ public class MonsterThread extends Thread {
             }
         }
     }
-
 }

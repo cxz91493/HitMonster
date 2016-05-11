@@ -19,7 +19,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     private static SurfaceHolder surfaceHolder = null; // 建立SurfaceHolder物件
 
     //Show the picture
-     Bitmap bitmap;
+    Bitmap bitmap;
 
     static int screenWidth;
     static int screenHeight;

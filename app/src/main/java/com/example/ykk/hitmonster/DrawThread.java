@@ -30,6 +30,8 @@ public class DrawThread extends Thread {
                 monster.setNowX();
                 monster.setNowY();
             }
+
+
             surfaceView.draw(monsterList);
 
         }

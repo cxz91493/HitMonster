@@ -1,5 +1,7 @@
 package com.example.ykk.hitmonster;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -26,6 +28,29 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        startDialog();
+
+    }
+
+    public void startDialog(){
+        new AlertDialog.Builder(MainActivity.this)
+                .setTitle(R.string.startDialogTitle)
+                .setMessage(R.string.gameRule)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        init();
+                    }
+                })
+                .setNegativeButton(R.string.leave, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                }).show();
+    }
+
+    public void init(){
         DisplayMetrics monitorSize = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(monitorSize);
 
@@ -36,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
 
         monsterThread  = new MonsterThread(monsterList, surfaceView);
         monsterThread.start();
-
     }
 
     @Override
@@ -55,13 +79,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_settings:
                 break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event){
-
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -73,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
 ////                }
 //                Log.e("onTouch X", x +"");
 //                Log.e("onTouch Y",  y+"");
+
                 for(Monster monster: monsterList){
                     if(x >= monster.getNowX() && x <= monster.getNowX()+100 && y >= monster.getNowY() && y <= monster.getNowY()+100){
                         //Log.e("hitMonster ", monster.getHP() - 1 + "");
@@ -90,9 +113,36 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    public void judgeFailure(){
+
+        if (monsterList.size() == 10){
+            onDestroy();
+
+            new AlertDialog.Builder(MainActivity.this)
+                    .setTitle(R.string.lose)
+                    .setMessage(R.string.loseMessage)
+                    .setPositiveButton(R.string.restart, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            onResume();
+                        }
+                    })
+                    .setNegativeButton(R.string.leave, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    }).show();
+        }
+    }
+
     public void onDestroy(){
         super.onDestroy();
         monsterThread.interrupt();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }
