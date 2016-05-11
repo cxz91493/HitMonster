@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onTouchEvent(MotionEvent event){
 
-
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 x = event.getX();
