@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_settings:
                 break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -72,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
 ////                }
 //                Log.e("onTouch X", x +"");
 //                Log.e("onTouch Y",  y+"");
+
                 for(Monster monster: monsterList){
                     if(x >= monster.getNowX() && x <= monster.getNowX()+100 && y >= monster.getNowY() && y <= monster.getNowY()+100){
                         //Log.e("hitMonster ", monster.getHP() - 1 + "");
@@ -92,6 +92,5 @@ public class MainActivity extends AppCompatActivity {
     public void onDestroy(){
         super.onDestroy();
         monsterThread.interrupt();
-
     }
 }

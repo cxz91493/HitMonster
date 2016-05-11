@@ -1,5 +1,8 @@
 package com.example.ykk.hitmonster;
 
+
+import android.graphics.Rect;
+
 /**
  * Created by Ykk on 16/5/9.
  */
@@ -7,7 +10,7 @@ public class Monster {
 
     private float nowX;
     private float nowY;
-
+//    private Rect a;
     //向量，可以通過調節此兩個變數調節移動速度
     private int dx, dy;
 
@@ -19,6 +22,7 @@ public class Monster {
         this.HP = HP;
         dx = speed;
         dy = speed;
+
 
     }
 
@@ -35,9 +39,8 @@ public class Monster {
     }
     public void setNowX() {
         if (nowX < 0 || nowX > MySurfaceView.screenWidth - 32) {
-            dx = -dx;
+            dx = -dx;//random +,-
         }
-
         nowX = nowX + dx;
     }
 
@@ -46,12 +49,10 @@ public class Monster {
         if (nowY < 0 || nowY > MySurfaceView.screenHeight - 32) {
             dy = -dy;
         }
-
         nowY = nowY + dy;
     }
 
-    public int setHP(int nowHP){
+    public void setHP(int nowHP){
         HP = nowHP;
-        return HP;
     }
 }
