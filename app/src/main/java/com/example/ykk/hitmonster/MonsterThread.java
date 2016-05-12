@@ -20,13 +20,13 @@ public class MonsterThread extends Thread {
     @Override
     public void run() {
         int monsterCount = 0;
-        int speed = 3;
+        int speed = 7;
         int time = 3000;
         new DrawThread(monsterList,surfaceView).start();
 
         while (monsterList.size() <= 10) {
             if (monsterCount % 5 == 0) {//Add speed
-                speed++;
+                speed+=2;
                 time = (time == 1000 ) ? 1000 : time-500;
             }
             float x = (float) (Math.random() * MySurfaceView.screenWidth);

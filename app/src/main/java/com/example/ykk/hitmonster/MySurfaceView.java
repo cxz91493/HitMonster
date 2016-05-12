@@ -52,7 +52,6 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     }
 
     public void draw(LinkedList<Monster> monsterList){
-
         // 取得繪圖用的Canvas物件
         Canvas c = surfaceHolder.lockCanvas();
         try
@@ -60,7 +59,6 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             // 同一時間必須確保只有一個執行緒存取Canvas
             synchronized(surfaceHolder)
             {
-
                 c.drawColor(Color.BLACK);
                 for(Monster monster: monsterList){
                     // Draw by Canvas
@@ -80,7 +78,6 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             // 備註: Unlock前確認Canvas是否已經被銷毀
             if(c != null) surfaceHolder.unlockCanvasAndPost(c);
         }
-
         // ...釋放資源，尤其是Bitmap圖檔...
     }
 
@@ -102,7 +99,5 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
                 bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.star1);
                 break;
         }
-
     }
-
 }

@@ -2,6 +2,9 @@ package com.example.ykk.hitmonster;
 
 
 import android.graphics.Rect;
+import android.util.Log;
+
+import java.util.Random;
 
 /**
  * Created by Ykk on 16/5/9.
@@ -10,9 +13,10 @@ public class Monster {
 
     private float nowX;
     private float nowY;
-//    private Rect a;
+
     //向量，可以通過調節此兩個變數調節移動速度
     private int dx, dy;
+    double r = Math.random() * (Math.PI * 2);
 
     private int HP;
 
@@ -20,9 +24,8 @@ public class Monster {
         this.nowX = nowX;
         this.nowY = nowY;
         this.HP = HP;
-        dx = speed;
-        dy = speed;
-
+        dx = (int)(speed * Math.cos(r));
+        dy = (int)(speed * Math.sin(r));
 
     }
 
@@ -39,13 +42,12 @@ public class Monster {
     }
     public void setNowX() {
         if (nowX < 0 || nowX > MySurfaceView.screenWidth - 32) {
-            dx = -dx;//random +,-
+            dx = -dx;
         }
         nowX = nowX + dx;
     }
 
     public void setNowY() {
-
         if (nowY < 0 || nowY > MySurfaceView.screenHeight - 32) {
             dy = -dy;
         }
