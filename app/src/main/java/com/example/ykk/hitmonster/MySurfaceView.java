@@ -19,15 +19,13 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     private static SurfaceHolder surfaceHolder = null; // 建立SurfaceHolder物件
 
     //Show the picture
-    static Bitmap bitmap;
+    Bitmap bitmap;
 
     static int screenWidth;
     static int screenHeight;
 
     public MySurfaceView(Context context) {
         super(context);
-
-        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.star);
 
         // 取得SurfaceHolder物件並設定Callback
         surfaceHolder = getHolder();
@@ -53,7 +51,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
         //程式畫面的Canvas銷毀時執行
     }
 
-    public static void draw(LinkedList<Monster> monsterList){
+    public void draw(LinkedList<Monster> monsterList){
 
         // 取得繪圖用的Canvas物件
         Canvas c = surfaceHolder.lockCanvas();
@@ -66,8 +64,8 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
                 c.drawColor(Color.BLACK);
                 for(Monster monster: monsterList){
                     // Draw by Canvas
-
                     Log.i("SurfaceView", "draw()");
+                    changePicture(monster);
                     c.drawBitmap(bitmap, monster.getNowX(), monster.getNowY(), null);
                 }
             }
@@ -86,5 +84,25 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
         // ...釋放資源，尤其是Bitmap圖檔...
     }
 
+    public void changePicture(Monster monster){
+        switch (monster.getHP()){
+            case 5:
+                bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.star5);
+                break;
+            case 4:
+                bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.star4);
+                break;
+            case 3:
+                bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.star3);
+                break;
+            case 2:
+                bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.star2);
+                break;
+            case 1:
+                bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.star1);
+                break;
+        }
+
+    }
 
 }
